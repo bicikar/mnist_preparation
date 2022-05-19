@@ -108,7 +108,8 @@ def rec_digit(img_path):
 
 Ноль распознался нормально, потому что находится по центру и расположен в целом довольно удачно. С остальными числами плохо. Получается, точность на 5 тестовых картинках всего 20 процентов.
 
-Посмотрим на главный тезис, как должен выглядеть MNIST-овский [датасет](http://yann.lecun.com/exdb/mnist/): *"The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field."*
+Посмотрим на главный тезис, как должен выглядеть MNIST-овский [датасет](http://yann.lecun.com/exdb/mnist/):
+> The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field.
 
 Преобразуем все картинки к такому формату. Так же отметим, что если фон не совсем белый, то мы получим что-то, сильно отличающееся от MNIST-овского датасета, т.е. белая цифра на черном фоне, как в примере с девяткой. Поэтому добавим пороговую обработку после считывания изображения:
 
