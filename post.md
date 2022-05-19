@@ -108,7 +108,7 @@ def rec_digit(img_path):
 
 Ноль распознался нормально, потому что находится по центру и расположен в целом довольно удачно. С остальными числами плохо. Получается, точность на 5 тестовых картинках всего 20 процентов.
 
-Еще раз сформулируем главный тезис, как выглядит датасет: The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field.
+Еще раз сформулируем главный тезис, как выглядит [датасет](http://yann.lecun.com/exdb/mnist/): The original black and white (bilevel) images from NIST were size normalized to fit in a 20x20 pixel box while preserving their aspect ratio. The resulting images contain grey levels as a result of the anti-aliasing technique used by the normalization algorithm. the images were centered in a 28x28 image by computing the center of mass of the pixels, and translating the image so as to position this point at the center of the 28x28 field.
 
 Преобразуем все картинки к такому формату. Также отметим, что если фон не совсем белый, то мы получим что-то, сильно отличающееся от мнистовского датасета, белая цифра на черном фоне, как в примере с девяткой. Поэтому добавим пороговую обработку после считывания изображения:
 
@@ -129,7 +129,7 @@ def rec_digit(img_path):
 
 ![После применения пороговой обработки](imgs/good_nine.JPG "После применения пороговой обработки")
 
-Теперь мы хотим поместить картинку в бокс 20x20 пикселей. Можно делать это несколькими способами. Один из вариантов - найти контур, ограничивающий цифру, взять его в качестве основного изображения и сделать resize до нужных размеров. Пример, как это можно делать. В том числе может пригодиться, если необходимо распознавать числа из более чем одной цифры.
+Теперь мы хотим поместить картинку в бокс 20x20 пикселей. Можно делать это несколькими способами. Один из вариантов - найти контур, ограничивающий цифру, взять его в качестве основного изображения и сделать resize до нужных размеров. [Пример](https://stackoverflow.com/questions/21104664/extract-all-bounding-boxes-using-opencv-python), как это можно делать. В том числе может пригодиться, если необходимо распознавать числа из более чем одной цифры.
 
 Мы же будем делать немного проще и, с другой стороны, надежнее. А именно, сперва удалим все строки и столбцы, в которых пиксели только черные. Таким образом мы получим картинку, в точности являющейся прямоугольной оболочкой нашей цифры.
 
@@ -225,7 +225,7 @@ def getBestShift(img):
     return shiftx,shifty
 ```
 
-И собственно функция, которая сдвигает картинку в нужном направлении. Подробнее о warpAffine. В нашем случае следующая матрица трансформации:
+И собственно функция, которая сдвигает картинку в нужном направлении. Подробнее о [warpAffine](https://docs.opencv.org/4.x/da/d6e/tutorial_py_geometric_transformations.html#gsc.tab=0). В нашем случае следующая матрица трансформации:
 
 ![](imgs/matrix.png "Матрица")
 
@@ -322,3 +322,5 @@ def rec_digit(img_path):
 Как итог, моделька выше с использованием построенного препроцессинга изображений дает следующий результат:
 
 ![](imgs/result.JPG "Результат")
+
+Пост написан для https://github.com/spbu-math-cs/ml-course
